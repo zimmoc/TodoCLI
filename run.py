@@ -3,39 +3,32 @@ from todoist_api_python.api import TodoistAPI
 
 api = TodoistAPI("755a8992983b0540febf3a6c66c4d9c16a7b9d31")
 
+
+### MENUS
+
 def display_menu():
     """
     Menu to navigate program functions
     """
+    print("\n")
     print("Options:")
     print("1. Show tasks")
     print("2. Create tasks")
     print("3. Change account")
-
-def get_user_input():
-    """
-    Record user input and return it if valid
-    """
-    while True:
-        try:
-            choice = int(input("Enter your choice (1-3): "))
-            if 1 <= choice <= 3:
-                return choice
-            else:
-                print("Please enter a valid choice (1-3).")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
+    print("\n")
 
 def user_choice(user_choice):
     """
     Sub-menus depending on user choice from menu
     """
     if user_choice == 1:
+        print("\n")
         print("Which tasks do you wanna view?")
         print("1. My day")
         print("2. Today")
         print("3. Weekly")
         print("4. Return to previous menu")
+        print("\n")
     elif user_choice == 2:
         print("Create task")
         
@@ -43,9 +36,31 @@ def user_choice(user_choice):
         print("You selected Option 3.")
 
 def return_to_menu():
+    """
+    Restarts main() function to give the impression that the user
+    is sent back to main menu
+    """
+    print("\n")
     input("Press Enter to go back to menu...")
-    display_menu()
+    print("\n")
+    main()
 
+
+### USER INPUT RESPONSE
+        
+def get_user_input():
+    """
+    Record user input and return it if valid
+    """
+    while True:
+        try:
+            choice = int(input("Enter your choice: "))
+            if 1 <= choice <= 4:
+                return choice
+            else:
+                print("Please enter a valid choice.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 def view_tasks(user_choice):
     """
@@ -59,7 +74,11 @@ def view_tasks(user_choice):
         return_to_menu()
     elif user_choice == 3:
         print("option 3")
-        
+    elif user_choice == 4:
+        main()
+
+
+### API FUNCTIONS
 
 def get_todays_tasks():
     """
@@ -72,7 +91,14 @@ def get_todays_tasks():
     except Exception as error:
         print(error)
     
-    pprint(tasks)
+    print("\n")
+    print("Today")
+    print("----------")
+    for task in tasks:
+        task_name = task.content
+        due_date = task.due.date
+        print(f"{task_name} - {due_date}")
+    print("----------")
 
 def get_myday_tasks():
     """
@@ -80,15 +106,22 @@ def get_myday_tasks():
     """
     try:
         tasks = api.get_tasks(
-            filter='today | overdue'
+            filter='overdue | today'
         )
     except Exception as error:
         print(error)
+    print("\n")
+    print("My day")
+    print("----------")
+    for task in tasks:
+        task_name = task.content
+        due_date = task.due.date
+        print(f"{task_name} - {due_date}")
+    print("----------")
+
+
+### MAIN
     
-    pprint(tasks)
-
-
-
 def main():
     display_menu()
     user_input = get_user_input()
