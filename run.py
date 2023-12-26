@@ -26,7 +26,7 @@ def user_choice(user_choice):
     if user_choice == 1:
         print("\n")
         print("Which tasks do you wanna view?")
-        print("1. My day")
+        print("1. Overdue")
         print("2. Today")
         print("3. Weekly")
         print("4. Return to previous menu")
@@ -52,6 +52,18 @@ def return_to_menu():
     print("\n")
     main()
 
+def return_to_tasks_menu():
+    """
+    Restarts main() function to give the impression that the user
+    is sent back to main menu
+    """
+    print("\n")
+    input("Press Enter to return to tasks menu...")
+    print("\n")
+    user_input = 1
+    user_choice(user_input)
+    user_input = get_user_input()
+    view_tasks(user_input)
 
 ### USER INPUT RESPONSE
         
@@ -74,14 +86,14 @@ def view_tasks(user_choice):
     Sub-menu if user choose to view tasks
     """
     if user_choice == 1:
-        get_myday_tasks()
-        return_to_menu()
+        get_overdue_tasks()
+        return_to_tasks_menu()
     elif user_choice == 2:
         get_todays_tasks()
-        return_to_menu()
+        return_to_tasks_menu()
     elif user_choice == 3:
         get_weekly_tasks()
-        return_to_menu()
+        return_to_tasks_menu()
     elif user_choice == 4:
         main()
 
@@ -102,7 +114,7 @@ def get_todays_tasks():
         print(error)
     
     print("\n")
-    print("Today")
+    print("Tasks due today")
     print("----------")
     for task in tasks:
         task_name = task.content
@@ -110,18 +122,18 @@ def get_todays_tasks():
         print(f"{task_name} - {due_date}")
     print("----------")
 
-def get_myday_tasks():
+def get_overdue_tasks():
     """
     Get tasks marked with the today or overdue filter tag
     """
     try:
         tasks = api.get_tasks(
-            filter='overdue | today'
+            filter='overdue'
         )
     except Exception as error:
         print(error)
     print("\n")
-    print("My day")
+    print("Overdue tasks")
     print("----------")
     for task in tasks:
         task_name = task.content
@@ -141,7 +153,7 @@ def get_weekly_tasks():
         print(error)
     
     print("\n")
-    print("Your week")
+    print("Tasks due this week")
     print("----------")
     for task in tasks:
         task_name = task.content
@@ -152,18 +164,25 @@ def get_weekly_tasks():
 ## Create tasks
     
 def create_task():
-    task_name = '"' + input("Enter name: ") + '"'
-    task_due = '"' + input("Due date: ") + '"'
-    print(task_name)
-    print(task_due)
+    print("\n")
+    task_name = input("Enter task: ")
+    task_due = input("Enter task due date(ex. tomorrow, 2025-01-01): ")
     try:
         task = api.add_task(
             content=str(task_name),
             due_string=str(task_due),
     )
-        print(task)
+        
     except Exception as error:
         print(error)
+    
+    created_name = task.content
+    created_due_date = task.due.date
+    print("\n")
+    print("Successfully created task")
+    print("----------")
+    print(f"Task name: {created_name}")
+    print(f"With due date: {created_due_date}")
 
 ### MAIN
     
