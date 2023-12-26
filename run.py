@@ -33,6 +33,8 @@ def user_choice(user_choice):
         print("\n")
     elif user_choice == 2:
         print("Create task")
+        create_task()
+        return_to_menu()
         
     elif user_choice == 3:
         print("You selected Option 3.")
@@ -146,6 +148,22 @@ def get_weekly_tasks():
         due_date = task.due.date
         print(f"{task_name} - {due_date}")
     print("----------")
+
+## Create tasks
+    
+def create_task():
+    task_name = '"' + input("Enter name: ") + '"'
+    task_due = '"' + input("Due date: ") + '"'
+    print(task_name)
+    print(task_due)
+    try:
+        task = api.add_task(
+            content=str(task_name),
+            due_string=str(task_due),
+    )
+        print(task)
+    except Exception as error:
+        print(error)
 
 ### MAIN
     
