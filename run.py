@@ -1,3 +1,6 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+from pprint import pprint
+from todoist_api_python.api import TodoistAPI
+
+
+
+main()
