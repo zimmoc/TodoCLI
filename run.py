@@ -46,7 +46,7 @@ def view_tasks(user_choice):
     Sub-menu if user choose to view tasks
     """
     if user_choice == 1:
-        print("option 1")
+        get_myday_tasks()
     elif user_choice == 2:
         get_todays_tasks()
     elif user_choice == 3:
@@ -60,6 +60,19 @@ def get_todays_tasks():
     try:
         tasks = api.get_tasks(
             filter='today'
+        )
+    except Exception as error:
+        print(error)
+    
+    pprint(tasks)
+
+def get_myday_tasks():
+    """
+    Get tasks marked with the today or overdue filter tag
+    """
+    try:
+        tasks = api.get_tasks(
+            filter='today | overdue'
         )
     except Exception as error:
         print(error)
