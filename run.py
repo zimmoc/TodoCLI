@@ -1,5 +1,6 @@
 from pprint import pprint
 from todoist_api_python.api import TodoistAPI
+import sys
 
 api = TodoistAPI("755a8992983b0540febf3a6c66c4d9c16a7b9d31")
 
@@ -15,6 +16,7 @@ def display_menu():
     print("1. Show tasks")
     print("2. Create tasks")
     print("3. Change account")
+    print("4. Exit program")
     print("\n")
 
 def user_choice(user_choice):
@@ -34,6 +36,9 @@ def user_choice(user_choice):
         
     elif user_choice == 3:
         print("You selected Option 3.")
+    elif user_choice == 4:
+        print("Exiting program...")
+        sys.exit()
 
 def return_to_menu():
     """
@@ -73,12 +78,15 @@ def view_tasks(user_choice):
         get_todays_tasks()
         return_to_menu()
     elif user_choice == 3:
-        print("option 3")
+        get_weekly_tasks()
+        return_to_menu()
     elif user_choice == 4:
         main()
 
 
 ### API FUNCTIONS
+
+## Get tasks from api 
 
 def get_todays_tasks():
     """
@@ -119,6 +127,25 @@ def get_myday_tasks():
         print(f"{task_name} - {due_date}")
     print("----------")
 
+def get_weekly_tasks():
+    """
+    Get tasks due before next monday
+    """
+    try:
+        tasks = api.get_tasks(
+            filter='due before: mon'
+        )
+    except Exception as error:
+        print(error)
+    
+    print("\n")
+    print("Your week")
+    print("----------")
+    for task in tasks:
+        task_name = task.content
+        due_date = task.due.date
+        print(f"{task_name} - {due_date}")
+    print("----------")
 
 ### MAIN
     
@@ -128,7 +155,5 @@ def main():
     user_choice(user_input)
     user_input = get_user_input()
     view_tasks(user_input)
-    
-
 
 main()
