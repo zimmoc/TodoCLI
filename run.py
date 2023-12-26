@@ -35,11 +35,17 @@ def user_choice(user_choice):
         print("1. My day")
         print("2. Today")
         print("3. Weekly")
+        print("4. Return to previous menu")
     elif user_choice == 2:
         print("Create task")
         
     elif user_choice == 3:
         print("You selected Option 3.")
+
+def return_to_menu():
+    input("Press Enter to go back to menu...")
+    display_menu()
+
 
 def view_tasks(user_choice):
     """
@@ -47,8 +53,10 @@ def view_tasks(user_choice):
     """
     if user_choice == 1:
         get_myday_tasks()
+        return_to_menu()
     elif user_choice == 2:
         get_todays_tasks()
+        return_to_menu()
     elif user_choice == 3:
         print("option 3")
         
