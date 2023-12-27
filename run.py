@@ -240,8 +240,8 @@ def validate_due_date(input_due_date):
     lower_input = input_due_date.lower()
 
     if lower_input in weekdays:
-        days_until_next_weekday =
-        (today.weekday() - weekdays.index(lower_input)) % 7
+        days_until_next_weekday = (today.weekday() - weekdays.ind(
+            lower_input)) % 7
         due_date = today + timedelta(days=days_until_next_weekday)
         return due_date.strftime('%Y-%m-%d')
 
