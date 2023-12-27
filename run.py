@@ -12,7 +12,7 @@ def display_menu():
     """
     Menu to navigate program functions
     """
-    print("\nOptions:")
+    print("\nTodoist:")
     print("1. Show tasks")
     print("2. Create tasks")
     print("3. Complete task")
