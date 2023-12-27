@@ -1,6 +1,7 @@
 from pprint import pprint
 from todoist_api_python.api import TodoistAPI
 import sys
+from datetime import datetime, timedelta
 
 api_key = "755a8992983b0540febf3a6c66c4d9c16a7b9d31"
 api = TodoistAPI(api_key)
@@ -185,7 +186,15 @@ def create_task():
     """
     print("\nCreate Task:")
     task_name = input("Enter task: ")
-    task_due = input("Enter task due date (e.g., tomorrow, 2025-01-01): ")
+    while True:
+        task_due = input("Enter task due date (e.g., tomorrow, 2025-01-01): ")
+        try:
+            due_date = validate_due_date(task_due)
+            break
+        except ValueError as ve:
+            print(f"Error: {ve}")
+            print("Please enter a valid due date.")
+
     try:
         task = api.add_task(
             content=str(task_name),
@@ -201,6 +210,30 @@ def create_task():
     print("----------")
     print(f"Task name: {created_name}")
     print(f"With due date: {created_due_date}")
+
+# Task due date validation
+    
+def validate_due_date(input_due_date):
+    """
+    Parse and validate the input due date
+    """
+    today = datetime.today()
+
+    if input_due_date.lower() == 'today':
+        return today.strftime('%Y-%m-%d')
+
+    if input_due_date.lower() == 'tomorrow':
+        return (today + timedelta(days=1)).strftime('%Y-%m-%d')
+
+    weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    lower_input = input_due_date.lower()
+
+    if lower_input in weekdays:
+        days_until_next_weekday = (today.weekday() - weekdays.index(lower_input)) % 7
+        due_date = today + timedelta(days=days_until_next_weekday)
+        return due_date.strftime('%Y-%m-%d')
+
+    return datetime.strptime(input_due_date, '%Y-%m-%d').strftime('%Y-%m-%d')
 
 ## Complete task
     
