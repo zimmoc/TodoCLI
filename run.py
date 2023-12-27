@@ -196,7 +196,6 @@ def create_task():
     """
     Create tasks with name and due date
     """
-    print("\nCreate Task")
     print("----------")
     task_name = input("Enter task: ")
     while True:
