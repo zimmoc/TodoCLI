@@ -180,6 +180,9 @@ def get_weekly_tasks():
 ## Create tasks
     
 def create_task():
+    """
+    Create tasks with name and due date
+    """
     print("\nCreate Task:")
     task_name = input("Enter task: ")
     task_due = input("Enter task due date (e.g., tomorrow, 2025-01-01): ")
@@ -202,6 +205,9 @@ def create_task():
 ## Complete task
     
 def complete_task():
+    """
+    Gets tasks list from weekly tasks function and completes the selected task with task id
+    """
     try:
         tasks = get_weekly_tasks()
         
