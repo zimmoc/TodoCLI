@@ -13,7 +13,7 @@ def display_menu():
     """
     Menu to navigate program functions
     """
-    print("\nTodoist:")
+    print("\nTodoCLI:")
     print("1. Show tasks")
     print("2. Create tasks")
     print("3. Complete task")
@@ -51,6 +51,7 @@ def return_to_menu():
     """
     print("\nPress Enter to go back to the menu...")
     input("\n")
+    print("----------------------------------------")
     main()
 
 
@@ -61,6 +62,7 @@ def return_to_tasks_menu():
     """
     print("\nPress Enter to return to the tasks menu...")
     input("\n")
+    print("----------------------------------------")
     user_input = 1
     user_choice(user_input)
     user_input = get_user_input()
@@ -76,6 +78,7 @@ def get_user_input():
     while True:
         try:
             choice = int(input("Enter your choice: "))
+            print("----------------------------------------")
             if 1 <= choice <= 4:
                 return choice
             else:
@@ -193,7 +196,8 @@ def create_task():
     """
     Create tasks with name and due date
     """
-    print("\nCreate Task:")
+    print("\nCreate Task")
+    print("----------")
     task_name = input("Enter task: ")
     while True:
         task_due = input("Enter task due date (e.g., tomorrow, 2025-01-01): ")
