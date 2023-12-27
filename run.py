@@ -3,7 +3,7 @@ from todoist_api_python.api import TodoistAPI
 import sys
 from datetime import datetime, timedelta
 
-api_key = "755a8992983b0540febf3a6c66c4d9c16a7b9d31"
+
 api = TodoistAPI(api_key)
 
 
