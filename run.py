@@ -1,4 +1,3 @@
-from pprint import pprint
 from todoist_api_python.api import TodoistAPI
 import sys
 from datetime import datetime, timedelta
